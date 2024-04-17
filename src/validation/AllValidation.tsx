@@ -37,3 +37,12 @@ export const offerValidationSchema = Yup.object().shape({
   // offerImage: Yup.string()
   // .required('Offer image is required')
 })
+
+export const addCoinValidationSchema = Yup.object().shape({
+  baseCoin: Yup.string().required('Base Coin is required'),
+  quoteCoin: Yup.string().required('Quote Coin is required'),
+})
+
+export const forgotPasswordValidationSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Email is required"),
+})

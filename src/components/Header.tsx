@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
-  
+    let navigate = useNavigate();
+    const handleLogout = ()=>{
+       navigate('/')
+    }
   return (
     <>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
@@ -46,13 +50,12 @@ export default function Header() {
                 </Link>
               </li>
               <div className="mx-70">
-            {/* <Link
-              to="/logout"
+            <Link
+              to="/"
+              onClick={handleLogout}
             >
               Logout
-            </Link> */}
-            {/* You can use an icon instead of text for the logout button */}
-            {/* Example: <LogoutIcon className="text-gray-900 dark:text-white" /> */}
+            </Link>
           </div>
             </ul>
           </div>

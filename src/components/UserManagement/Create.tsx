@@ -1,11 +1,6 @@
-import { Col, Row } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import { Link } from "react-router-dom";
 import Header from "../Header";
 import { Formik } from "formik";
 import { addUserSchema } from "../../validation/AllValidation";
-import axios from "axios";
 import API from '../../config/DataServices';
 import { toast } from 'react-toastify';
 
