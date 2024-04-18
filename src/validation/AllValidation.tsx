@@ -46,3 +46,16 @@ export const addCoinValidationSchema = Yup.object().shape({
 export const forgotPasswordValidationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
 })
+
+export const changePasswordValidationSchema = Yup.object().shape({
+  password: Yup.string()
+  .required('Password is required')
+  .min(6, 'Password must be at least 6 characters')
+  .matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character'
+  ),
+confirmPassword: Yup.string()
+  .required('Confirm Password is required')
+  .oneOf([Yup.ref('password'), ], 'Passwords must match'),
+})

@@ -1,8 +1,20 @@
+import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
+import { changePasswordValidationSchema } from "../../validation/AllValidation";
 
 const ChangePassword = () => {
     let navigate = useNavigate();
-    
+    const formik = useFormik({
+        initialValues:{
+            password: "",
+            confirmPassword: ""
+        },
+        validationSchema:changePasswordValidationSchema,
+        onSubmit:(value, {resetForm})=>{
+            console.log(value);
+            
+        }
+    })
   return (
     <>
       <main id="content" role="main" className="w-full  max-w-md mx-auto p-6">
@@ -14,7 +26,7 @@ const ChangePassword = () => {
               </h1>
             </div>
             <div className="mt-5">
-              <form >
+              <form onSubmit={formik.handleSubmit}>
                 <div className="grid gap-y-4">
                   <div>
                     <label
@@ -30,7 +42,13 @@ const ChangePassword = () => {
                         name="password"
                         className="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                         aria-describedby="password-error"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.password}
                       />
+                      {formik.touched.password && formik.errors.password ? (
+                                <p className="text-xs text-danger text-[13px] ms-2">{formik.errors.password}</p>
+                            ) : null}
                     </div>
                   </div>
                   <div>
@@ -47,7 +65,13 @@ const ChangePassword = () => {
                         name="confirmPassword"
                         className="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                         aria-describedby="confirmPassword-error"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.confirmPassword}
                       />
+                       {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
+                                <p className="text-xs text-danger text-[13px] ms-2">{formik.errors.confirmPassword}</p>
+                            ) : null}
                     </div>
                   </div>
                   <button

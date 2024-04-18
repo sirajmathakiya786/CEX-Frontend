@@ -1,27 +1,76 @@
+import { useState } from "react";
+import OTPInput from "react-otp-input";
+import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import API from "../../config/DataServices";
+
+
 const VerifyOTP = () => {
+    let navigate = useNavigate()
+  const [otp, setOtp] = useState("");
+  console.log(otp,"otp")
+
+  const location = useLocation();
+  const email = location?.state?.email;
+  
+  const data ={
+    otp:+otp,
+    email :email,
+  }
+  
+  const handleverifyOtpSubmit = async () => {
+    try {
+        const response = await API.post('admin/verify-otp', data)
+        console.log(response);
+        
+        toast.success(response.data.message)
+        
+        // setTimeout(()=>{
+        //     navigate('/change-password')
+        // })   
+    } catch (error:any) {
+        toast.error(error.response.data.message)
+    }
+  };
+
   return (
     <>
-        <div className="max-w-md mx-auto border max-w-sm mt-20 rounded">
-    <form className="shadow-md px-4 py-6">
-        <div className="flex justify-center gap-2 mb-6">
-            <input className="w-12 h-12 text-center border rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500" type="text" maxLength={1} pattern="[0-9]" inputMode="numeric" autoComplete="one-time-code" required />
-            <input className="w-12 h-12 text-center border rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500" type="text" maxLength={1} pattern="[0-9]" inputMode="numeric" autoComplete="one-time-code" required />
-            <input className="w-12 h-12 text-center border rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500" type="text" maxLength={1} pattern="[0-9]" inputMode="numeric" autoComplete="one-time-code" required />
-            <input className="w-12 h-12 text-center border rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500" type="text" maxLength={1} pattern="[0-9]" inputMode="numeric" autoComplete="one-time-code" required />
-            <input className="w-12 h-12 text-center border rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500" type="text" maxLength={1} pattern="[0-9]" inputMode="numeric" autoComplete="one-time-code" required />
-            <input className="w-12 h-12 text-center border rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500" type="text" maxLength={1} pattern="[0-9]" inputMode="numeric" autoComplete="one-time-code" required />
+      <main id="content" role="main" className="w-full  max-w-md mx-auto p-6">
+        <div className="mt-7 bg-white  rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700 border-2 border-indigo-300">
+          <div className="p-4 sm:p-7">
+            <div className="text-center">
+              <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">
+                Verify OTP
+              </h1>
+            </div>
+            <div style={{ width: "700PX" }}>
+              <OTPInput
+                value={otp}
+                onChange={setOtp}
+                numInputs={6}
+                renderSeparator={<span>-</span>}
+                renderInput={(props) => <input {...props} />}
+                inputStyle={{
+                  width: "30px",
+                  height: "35px",
+                  margin: "10px 10px",
+                  fontSize: "1rem",
+                  borderRadius: 4,
+                  border: "2px solid rgba(0,0,0,0.3)",
+                  outline: "none",
+                }}
+              />
+            </div>
+            <div className="text-center mt-4">
+              <button onClick={handleverifyOtpSubmit}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Submit
+              </button>
+            </div>
+          </div>
         </div>
-        <div className="flex items-center justify-center">
-            <button className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-                Verify
-            </button>
-           
-        </div>
-    </form>
-</div>
-
-
-
+      </main>
     </>
   );
 };
