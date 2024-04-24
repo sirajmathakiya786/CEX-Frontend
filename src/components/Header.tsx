@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function Header() {
     let navigate = useNavigate();
-    const handleLogout = ()=>{
-       navigate('/')
+    
+    const handleLogout = ()=>{  
+      localStorage.removeItem("token");
+      navigate('/')
     }
   return (
     <>

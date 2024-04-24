@@ -2,23 +2,34 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { loginSchema } from "../../validation/AllValidation";
 import { Formik } from "formik";
+import API from "../../config/DataServices";
+
+interface FormValue{
+  email: string,
+  password: string
+}
 
 const Login = () => {
   let navigate = useNavigate();
-  const handleLogin = ()=>{
-      setTimeout(() => {
-          toast.success("Login Successfully")
-          navigate("/dashboard")
-      }, 3000);
-
-  }
-  const initialValues = {
+  
+  const initialValues: FormValue = {
     email: "",
     password: "",
   };
 
-  const handleLoginFormSubmit = () => {
-        
+  const handleLoginFormSubmit = async (value: FormValue) => {
+    try {
+      const response = await API.post('admin/login',value)
+      const adminToken = response.data.token
+      localStorage.setItem("token",adminToken)
+      toast.success(response.data.message)
+      setTimeout(()=>{
+        navigate('/dashboard')
+      })
+    } catch (error:any) {
+        toast.error(error.response.data.message)
+    }
+    
   };
 
   return (
@@ -86,7 +97,7 @@ const Login = () => {
                     <div style={{ color: 'red' }}>{errors.password}</div>
                   </div>
                   <div className="mt-8">
-                    <button className="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600" onClick={handleLogin}>
+                    <button className="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">
                       Login
                     </button>
                   </div>
