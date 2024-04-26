@@ -4,7 +4,7 @@ import Header from "../Header";
 
 const OfferList = () => {
   const [status, setStatus] = useState(true);
-
+  
   return (
     <>
       <Header />

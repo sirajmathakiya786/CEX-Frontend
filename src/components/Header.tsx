@@ -43,14 +43,6 @@ export default function Header() {
                   OfferManagement
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/coin-list"
-                  className="text-gray-900 dark:text-white hover:underline"
-                >
-                  CoinManagement
-                </Link>
-              </li>
               <div className="mx-70">
             <Link
               to="/"

@@ -1,7 +1,5 @@
 import { BrowserRouter,Route,Routes } from "react-router-dom";
-import React from 'react'
 import { Create } from "../components/UserManagement/Create";
-import Header from "../components/Header";
 import { Dashboard } from "../components/Dashboard/Dashboard";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,6 +12,7 @@ import { CreateCoin } from "../components/CoinManagement/Create";
 import ForgotPassword from "../components/ForgotPassword/ForgotPassword";
 import VerifyOTP from "../components/ForgotPassword/VerifyOTP";
 import ChangePassword from "../components/ForgotPassword/ChangePassword";
+import { Edit } from "../components/UserManagement/Edit";
 
 const AppRoutes = () => {
   return (
@@ -27,11 +26,13 @@ const AppRoutes = () => {
         <Route path="add-coin" element={<CreateCoin />} />
         <Route path="user-list" element={<UserList />} />
         <Route path="add-user" element={<Create />} />
+        <Route path="edit-user" element={<Edit />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="offer-list" element={<OfferList />} />
         <Route path="add-offer" element={<OfferCreate />} />
         <Route path="coin-list" element={<CoinList />} />
         <Route path="add-coin" element={<CreateCoin />} />
+        
       </Routes>
     </BrowserRouter>
   )

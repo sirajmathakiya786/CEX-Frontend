@@ -1,8 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../Header";
 import { useEffect, useState } from "react";
 import API from "../../config/DataServices";
-import { log } from "console";
 import { toast } from "react-toastify";
 
 interface GetAllUser {
@@ -15,7 +14,8 @@ interface GetAllUser {
   isActive: boolean;
 }
 const UserList = () => {
-  const [status, setStatus] = useState(true);
+  const navigate = useNavigate();
+  // const [status, setStatus] = useState(true);
   const [page, setPage] = useState(1);
   const PAGE_SIZE = [10, 20, 30, 50, 100];
   const [pageSize, setPageSize] = useState(PAGE_SIZE[0]);
@@ -26,6 +26,7 @@ const UserList = () => {
   const [id, setId] = useState('');
 
   const getUserData = () => {
+    
     try {
       API.get(
         `/admin/user-management/get-user?search=${searchQuery}&page=${page}&perPage=${pageSize}`
@@ -70,6 +71,11 @@ const UserList = () => {
   };
 
   const activeDeactiveToggal = () => {};
+
+  const handleEdit =  (userData: GetAllUser)=>{
+    navigate(`/edit-user`, { state:{userData}})
+
+  }
 
   useEffect(() => {
     getUserData();
@@ -176,19 +182,20 @@ const UserList = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <Link
-                        to="#"
+                      <button
+                       
                         className="mr-2 font-medium text-green-600 dark:text-blue-500 hover:underline"
+                        onClick={()=>handleEdit(values)}
                       >
                         Edit
-                      </Link>
-                      <Link
-                        to="#"
+                      </button>
+                      <button
+                      
                         onClick={()=> handleDeleteClick(values._id)}
                         className="mr-2 font-medium text-red-600 dark:text-red-500 hover:underline"
                       >
                         Delete
-                      </Link>
+                      </button>
                     </td>
                   </tr>
                 );

@@ -2,8 +2,12 @@ import { useState, ChangeEvent } from "react";
 import Header from "../Header";
 import { offerValidationSchema } from "../../validation/AllValidation";
 import { Formik } from "formik";
+import API from "../../config/DataServices";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export const OfferCreate = () => {
+  const navigate = useNavigate();
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const initialValues = {
@@ -27,9 +31,24 @@ export const OfferCreate = () => {
     }
 };
 
-
-  const handleOfferFormSubmit = (values : any) => {
-    
+  const handleOfferFormSubmit = async(values : any) => {
+    try {
+      const formData = new FormData();
+      formData.append('startDate', values.startDate);
+      formData.append('endDate', values.endDate);
+      formData.append('title', values.title);
+      formData.append('description', values.description);
+      formData.append('offerImage', values.offerImage);
+      
+      const response = await API.post('admin/offer-management/add', formData)
+      toast.success(response.data.message)
+      setTimeout(()=>{
+        navigate('/offer-list')
+      },2000)
+      
+    } catch (error: any) {
+      toast.error(error.response.data.message)
+    }
   };
   return (
     <>

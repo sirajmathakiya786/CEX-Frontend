@@ -2,13 +2,18 @@ import { Formik } from "formik";
 import Header from "../Header";
 import { addCoinValidationSchema } from "../../validation/AllValidation";
 
+// interface FormValue{
+//   baseCoin: string,
+//   quoteCoin: string
+// }
+
 export const CreateCoin = () => {
   const initialValues = {
     baseCoin: "",
     quoteCoin: "",
   };
   const handleCoinFormSubmit = (value: any) => {
-    console.log(value);
+    
   };
   return (
     <>
